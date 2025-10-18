@@ -9,11 +9,11 @@ description = "Windows process + network triage helper for security professional
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-authors = [{ name = "Itsmegsg" }]
+authors = [{ name = "ItsmeGSG" }]
 dependencies = [
     "psutil>=5.9",
 ]
 
 [project.urls]
-Homepage = "https://github.com/Itsmegsg/osquery_hunter"
-Issues = "https://github.com/Itsmegsg/osquery_hunter/issues"
+Homepage = "https://github.com/ItsmeGSG/osquery_hunter"
+Issues = "https://github.com/ItsmeGSG/osquery_hunter/issues"
