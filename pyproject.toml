@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "osquery_hunter"
+version = "5.19.0"
+description = "Windows process + network triage helper for security professionals."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Itsmegsg" }]
+dependencies = [
+    "psutil>=5.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/Itsmegsg/osquery_hunter"
+Issues = "https://github.com/Itsmegsg/osquery_hunter/issues"
