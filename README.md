@@ -2,16 +2,90 @@
 
 Windows process and network triage helper for security professionals.
 
-This tool is **not a replacement for AV/EDR**.  
-It is designed for **manual, analyst-driven triage** in environments where full endpoint protection is unavailable, limited, or during incident response.
+### Enhancements in this fork
 
-The objective is to quickly surface:
-- Unsigned or suspicious binaries
-- Potential LOLBIN usage
-- Suspicious parent/child process relationships
-- Network connections of interest
-- Optional reputation intelligence (VirusTotal, AbuseIPDB)
-- Detailed Authenticode signature metadata (subject, issuer, validity, thumbprint)
+This fork builds on the original `osquery_hunter` by ItsmeGSG and extends it with additional
+context and enrichment to support deeper manual triage.
+
+Key additions include:
+- Detailed Authenticode signature extraction (certificate subject, issuer, validity period, thumbprint, serial)
+- Optional file reputation checks using VirusTotal
+- Optional remote IP reputation checks using AbuseIPDB
+- Correlation of running processes with active network connections
+- Structured JSON output and a human-readable HTML dashboard
+- Improved documentation, integrity verification, and safety controls for open-source use
+
+These enhancements are intended to provide analysts with more context and reduce time spent
+pivoting between tools during investigation.
+
+**##OPTIONAL THREAT-INTELLIGENCE API INTEGRATION**
+
+This fork supports optional enrichment using third-party threat-intelligence services.
+These integrations are disabled by default and are only activated when API keys are supplied by the user.
+
+**VIRUSTOTAL (FILE REPUTATION)**
+
+VirusTotal is used to check SHA-256 hashes of executables against multiple antivirus engines.
+
+How it is used:
+
+File hashes are calculated locally on the system
+
+Only the SHA-256 hash is queried; files are never uploaded
+
+Results are used only for contextual analysis during triage
+
+How to enable VirusTotal integration:
+
+Create a VirusTotal API key from:
+https://www.virustotal.com/
+
+Set the API key as an environment variable.
+
+Windows (PowerShell):
+setx VT_API_KEY "your_virustotal_api_key"
+
+Restart the terminal and run the tool:
+python osquery_hunter_enriched_signature.py
+
+If the API key is not set, VirusTotal checks are skipped automatically.
+
+**ABUSEIPDB (IP REPUTATION)**
+
+AbuseIPDB is used to assess the reputation of public remote IP addresses observed in active network connections.
+
+How it is used:
+
+Only public IP addresses are queried
+
+Private, loopback, and reserved IPs are ignored
+
+Abuse confidence scores and report counts are used for contextual risk assessment
+
+How to enable AbuseIPDB integration:
+
+Create an AbuseIPDB API key from:
+https://www.abuseipdb.com/
+
+Set the API key as an environment variable.
+
+Windows (PowerShell):
+setx ABUSEIPDB_KEY "your_abuseipdb_api_key"
+
+Restart the terminal and run the tool:
+python osquery_hunter_enriched_signature.py
+
+If the API key is not set, AbuseIPDB checks are skipped automatically.
+
+API USAGE NOTES AND SAFETY
+
+API keys are never hardcoded and must not be committed to source control
+
+Free API tiers are rate-limited; scans may take longer when enrichment is enabled
+
+Reputation services may generate false positives, especially for cloud provider IPs
+
+API usage must comply with the respective service’s terms of service
 
 Basic IT and Windows internals knowledge is assumed.
 
@@ -91,14 +165,14 @@ $env:OSQUERYI_PATH = "C:\Program Files\osquery\osqueryi.exe"
 ## Notes
 Runtime Expectations
 -This tool may take several minutes to complete, depending on:
-Number of running processes
-Number of active network connections
-Whether VirusTotal and AbuseIPDB enrichment is enabled
-API rate limits
-Typical runtimes:
-Without external lookups: ~30–90 seconds
-With VirusTotal / AbuseIPDB enabled: several minutes
-This is expected behavior and not a hang.
+-Number of running processes
+-Number of active network connections
+-Whether VirusTotal and AbuseIPDB enrichment is enabled
+-API rate limits
+-Typical runtimes:
+--Without external lookups: ~30–90 seconds
+--With VirusTotal / AbuseIPDB enabled: several minutes
+-This is expected behavior and not a hang.
 - The tool lists running processes whose executables are **not simultaneously trusted in the Windows trust store and signed by Microsoft**.
 - It helps analysts quickly highlight unsigned/third‑party binaries, potential LOLBIN usage, and network connections of interest.
 - Vendor binaries (like *osquery*) are **not included** in this repository. Always verify hashes before use.
