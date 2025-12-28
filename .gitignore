@@ -1,55 +1,10 @@
-.venv/
-ENV/
-env/
+@"
+# osquery_hunter outputs (DO NOT COMMIT)
+*.json
+*.html
+
+# runtime
+baseline.json
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.pdb
-*.swp
-*.swo
-
-# Build / packaging
-build/
-dist/
-*.egg-info/
-.eggs/
-pip-wheel-metadata/
-
-# Test / tools caches
-.pytest_cache/
-.mypy_cache/
-.pyre/
-.coverage
-coverage.xml
-htmlcov/
-
-# Editors / OS
-.vscode/
-.idea/
-*.code-workspace
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Logs & temp
 *.log
-logs/
-temp/
-tmp/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Environment & secrets
-.env
-.env.*
-*.pem
-*.key
-
-# Project-specific
-# Do not commit vendor binaries (osquery, etc.)
-*.exe
-*.msi
-*.zip
-bin/
+"@ | Out-File .gitignore -Encoding utf8
