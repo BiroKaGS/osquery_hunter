@@ -87,7 +87,7 @@ Reputation services may generate false positives, especially for cloud provider 
 
 API usage must comply with the respective service’s terms of service
 
-Basic IT and Windows internals knowledge is assumed.
+##Basic IT and Windows internals knowledge is assumed.
 
 The **entire source code is included** and may be freely modified to suit your environment or workflow.
 
@@ -136,17 +136,17 @@ Expected SHA-256 (osquery 5.19.0 Windows x64):
 
 ---
 
-##Installation
+##Installation powershell
 # Clone the repository
-git clone https://github.com/BiroKaGS/osquery_hunter.git
-cd osquery_hunter
+`git clone https://github.com/BiroKaGS/osquery_hunter.git
+cd osquery_hunter`
 
 # Create and activate a virtual environment (recommended)
-python -m venv .venv
-. .\.venv\Scripts\Activate.ps1
+`python -m venv .venv
+. .\.venv\Scripts\Activate.ps1`
 
 # Install dependencies
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 ## Usage
 
